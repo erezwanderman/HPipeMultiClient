@@ -1,9 +1,12 @@
-﻿using H.Pipes;
+﻿using H.Formatters;
+using H.Pipes;
+using H.Pipes.AccessControl;
 using Shared;
 
 Console.WriteLine("Server starting.");
 
-await using var server = new PipeServer<Message>("PIPE_NAME");
+await using var server = new PipeServer<Message>("PIPE_NAME", formatter: new MessagePackFormatter());
+server.AllowUsersReadWrite();
 
 server.ClientConnected += (o, args) =>
 {

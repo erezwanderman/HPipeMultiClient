@@ -1,4 +1,5 @@
-﻿using H.Pipes;
+﻿using H.Formatters;
+using H.Pipes;
 using Shared;
 
 Console.WriteLine("Client starting.");
@@ -8,7 +9,7 @@ async Task ClientOperation(int index)
     Console.WriteLine("In ClientOperation(" + index + ")");
 
     TaskCompletionSource<Message> tcs = new TaskCompletionSource<Message>();
-    await using var client = new PipeClient<Message>("PIPE_NAME");
+    await using var client = new PipeClient<Message>("PIPE_NAME", formatter: new MessagePackFormatter());
 
     client.MessageReceived += (o, args) =>
     {
